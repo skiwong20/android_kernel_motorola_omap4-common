@@ -39,6 +39,7 @@
 #include <linux/notifier.h>
 #include <linux/memory.h>
 #include <linux/memory_hotplug.h>
+#include <linux/swap.h>
 
 static uint32_t lowmem_debug_level = 1;
 static int lowmem_adj[6] = {
@@ -156,8 +157,7 @@ static int lowmem_shrink(struct shrinker *s, struct shrink_control *sc)
 		array_size = lowmem_minfree_size;
 	for (i = 0; i < array_size; i++) {
 		minfree = lowmem_minfree[i];
-		if ((other_free < minfree && other_file < minfree) ||
-		    (total_swap_pages ? nr_swap_pages < lowmem_swapfree[i] : 0)) {
+		if (other_free < minfree && other_file < minfree) {
 			min_adj = lowmem_adj[i];
 			break;
 		}
