@@ -909,7 +909,6 @@ static int create_device(struct zram *zram, int device_id)
 {
 	int ret = -ENOMEM;
 
-	init_rwsem(&zram->lock);
 	init_rwsem(&zram->init_lock);
 
 	zram->queue = blk_alloc_queue(GFP_KERNEL);
